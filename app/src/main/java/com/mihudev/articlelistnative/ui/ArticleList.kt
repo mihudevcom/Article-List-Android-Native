@@ -30,5 +30,5 @@ fun PreviewArticleList() {
         Article(2, "Article 2", true),
         Article(3, "Article 3", false)
     )
-    ArticleList(sampleArticles, {})
+    ArticleList(sampleArticles) {}
 }
