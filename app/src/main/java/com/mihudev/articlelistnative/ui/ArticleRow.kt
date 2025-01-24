@@ -1,5 +1,6 @@
 package com.mihudev.articlelistnative.ui
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -20,12 +21,14 @@ import com.mihudev.articlelistnative.model.Article
 @Composable
 fun ArticleRow(
     article: Article,
-    onLikeToggle: (Int) -> Unit
+    onLikeToggle: (Int) -> Unit,
+    onArticleClick: (Int) -> Unit
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp),
+            .padding(16.dp)
+            .clickable { onArticleClick(article.id) },
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(text = article.title)
@@ -41,6 +44,6 @@ fun ArticleRow(
 @Preview(showBackground = true)
 @Composable
 fun PreviewArticleRow() {
-    ArticleRow(Article(1, "Sample Article", liked = false), {})
+    ArticleRow(Article(1, "Sample Article", liked = false), {}, {})
 }
 

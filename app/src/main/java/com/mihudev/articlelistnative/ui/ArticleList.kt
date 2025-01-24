@@ -10,13 +10,15 @@ import com.mihudev.articlelistnative.model.Article
 @Composable
 fun ArticleList(
     articles: List<Article>,
-    onLikeToggle: (Int) -> Unit
+    onLikeToggle: (Int) -> Unit,
+    onArticleClick: (Int) -> Unit
 ) {
     LazyColumn {
         items(articles) { article ->
             ArticleRow(
                 article = article,
-                onLikeToggle = onLikeToggle
+                onLikeToggle = onLikeToggle,
+                onArticleClick = {onArticleClick(article.id)}
             )
         }
     }
@@ -30,5 +32,9 @@ fun PreviewArticleList() {
         Article(2, "Article 2", true),
         Article(3, "Article 3", false)
     )
-    ArticleList(sampleArticles) {}
+    ArticleList(
+        sampleArticles,
+        onLikeToggle = { },
+        onArticleClick = {}
+    )
 }
