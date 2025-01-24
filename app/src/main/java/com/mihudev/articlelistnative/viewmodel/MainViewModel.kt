@@ -1,4 +1,4 @@
-package com.mihudev.articlelistnative
+package com.mihudev.articlelistnative.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -13,23 +13,36 @@ class MainViewModel : ViewModel() {
     private val _articles = MutableStateFlow<List<Article>>(emptyList())
     val articles: StateFlow<List<Article>> = _articles
 
+    private var currentPage = 1
+    private val pageSize = 10
+    internal var isLoading = false
+
     init {
         fetchArticles()
     }
 
-    private fun fetchArticles() {
+    internal fun fetchArticles() {
+        if (isLoading) return
+        isLoading = true
+
         viewModelScope.launch {
             try {
-                val apiArticles = RetrofitInstance.api.fetchArticles()
-                _articles.value = apiArticles.map { apiArticle ->
+                val apiArticles =
+                    RetrofitInstance.api.fetchArticles(page = currentPage, limit = pageSize)
+                val newArticles = apiArticles.map { apiArticle ->
                     Article(
                         id = apiArticle.id,
                         title = apiArticle.title,
                         liked = false
                     )
                 }
+
+                _articles.value += newArticles
+                currentPage++
             } catch (e: Exception) {
                 e.printStackTrace()
+            } finally {
+                isLoading = false
             }
         }
     }

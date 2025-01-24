@@ -13,10 +13,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -25,11 +21,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.mihudev.articlelistnative.model.Article
 import com.mihudev.articlelistnative.ui.ArticleDetailsScreen
-import com.mihudev.articlelistnative.ui.ArticleList
 import com.mihudev.articlelistnative.ui.ArticleListScreen
 import com.mihudev.articlelistnative.ui.theme.ArticleListNativeTheme
+import com.mihudev.articlelistnative.viewmodel.MainViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,7 +53,8 @@ class MainActivity : ComponentActivity() {
                                 },
                                 onLikeToggle = { articleId ->
                                     mainViewModel.onLikeToggle(articleId)
-                                }
+                                },
+                                viewModel = mainViewModel
                             )
                         }
 
