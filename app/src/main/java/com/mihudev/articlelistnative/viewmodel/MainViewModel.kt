@@ -13,9 +13,13 @@ class MainViewModel : ViewModel() {
     private val _articles = MutableStateFlow<List<Article>>(emptyList())
     val articles: StateFlow<List<Article>> = _articles
 
+    private val _errorMessage = MutableStateFlow<String?>(null)
+    val errorMessage: StateFlow<String?> = _errorMessage
+
     private var currentPage = 1
     private val pageSize = 10
     internal var isLoading = false
+        private set
 
     init {
         fetchArticles()
@@ -39,7 +43,9 @@ class MainViewModel : ViewModel() {
 
                 _articles.value += newArticles
                 currentPage++
+                _errorMessage.value = null
             } catch (e: Exception) {
+                _errorMessage.value = "failed to load articles. Please try again."
                 e.printStackTrace()
             } finally {
                 isLoading = false
