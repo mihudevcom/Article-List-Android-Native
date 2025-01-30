@@ -45,7 +45,7 @@ class MainViewModel : ViewModel() {
                 currentPage++
                 _errorMessage.value = null
             } catch (e: Exception) {
-                _errorMessage.value = "failed to load articles. Please try again."
+                _errorMessage.value = "Failed to load articles. Please try again."
                 e.printStackTrace()
             } finally {
                 isLoading = false
